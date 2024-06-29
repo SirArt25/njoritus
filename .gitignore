@@ -1,0 +1,68 @@
+# Compiled Object files
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lib
+*.a
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+*.pdb
+*.ilk
+*.ipdb
+*.iobj
+
+# Dependency directories
+/target/
+/Cargo.lock
+
+# Rust specific
+*.rs.bk
+
+# Generated files
+*.d
+*.gcno
+*.gcda
+*.gcov
+
+# Mac specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+*.log
+*.db
+
+# IDE specific
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Build directories
+/build/
+/bin/
+/lib/
+/logs/
+/generated/
+
+# Others
+*.log
+*.tmp
+*.swp
+*~
