@@ -1,0 +1,26 @@
+[]
+#--------------------------------------------------
+# [ FEAT BUG CHG REFAC PERF DATA TOOL COPY DOC SPEC WIP ]
+# Do not exceed above line in commit txt length
+#--------------------------------------------------
+# This is the empty space to separate the title from the body
+
+#---------------------------------------------------------------------
+
+#---------------------------------------------------------------------
+# Description of why, not how.
+# Link to issue, if needed.
+# Wrap summary text at the end of the above line, do not exceed line
+# length
+#---------------------------------------------------------------------
+#FEAT - feature, new stuff to the site
+#BUG - any bug fix you put in place
+#CHG - change that is NOT a refactor or a COPY change
+#REFAC - refactors existing code but does not change functionality
+#PERF -  effects the performance of the application, ie: adding sidekiq or where-exists
+#DATA -  only effects the data directly, ie: add to or remove from the seed file
+#TOOL - does not directly effect site users, developer or testing space, ex: pry or rubocop
+#COPY - only text changes
+#DOC - changes to documentation
+#SPEC - any test or spec changes
+#WIP - work in progress. USE SPARINGLY
