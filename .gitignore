@@ -66,3 +66,23 @@ Thumbs.db
 *.tmp
 *.swp
 *~
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+_deps/
+cmake_install.cmake
+*.cmake
+Makefile
+
+
+# Directory for build outputs
+/bin/
+/build/
+/obj/
+/output/
+/debug/
+/release/
+/test_data/outputs/
+# Dependency directories
+/deps/
