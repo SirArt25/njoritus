@@ -72,7 +72,6 @@ CMakeFiles/
 CMakeCache.txt
 _deps/
 cmake_install.cmake
-*.cmake
 Makefile
 
 

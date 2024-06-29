@@ -6,6 +6,8 @@ project(MyProject LANGUAGES C)
 set(CMAKE_C_COMPILER "gcc")
 set(CMAKE_CXX_COMPILER "g++")
 
+# include apr finding
+include(cmake/apr.cmake)
 
 # Set the output directory for runtime binaries (executables)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
