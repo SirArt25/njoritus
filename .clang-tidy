@@ -60,7 +60,7 @@ Checks: >
   readability-use-static-cast
 
 WarningsAsErrors: '*'
-HeaderFilterRegex: '.*'
+HeaderFilterRegex: 'include/.*'
 AnalyzeTemporaryDtors: false
 FormatStyle: none
 

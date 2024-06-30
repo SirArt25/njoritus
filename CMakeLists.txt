@@ -6,12 +6,26 @@ project(MyProject LANGUAGES C)
 set(CMAKE_C_COMPILER "gcc")
 set(CMAKE_CXX_COMPILER "g++")
 
+set(CMAKE_CONFIG_DIR ${CMAKE_SOURCE_DIR}/cmake)
 
-# Set the output directory for runtime binaries (executables)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-# Optionally, set the output directory for library files if needed
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+# Include Compiler version checker
+include(${CMAKE_CONFIG_DIR}/check_c_compiler_version.cmake)
+
+# Include Cmake Config 
+include(${CMAKE_CONFIG_DIR}/config.cmake)
+
+# Include APR finding
+# If you want verbose set APR_FIND_VERBOSE
+# set(APR_FIND_VERBOSE True)
+include(${CMAKE_CONFIG_DIR}/apr.cmake)
+
+# Find clang-tidy
+find_program(CLANG_TIDY "clang-tidy")
+
+# If clang-tidy is found, add it to the CMAKE_CXX_CLANG_TIDY variable
+if(CLANG_TIDY)
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY}")
+endif()
 
 
 # Set C standard
@@ -23,6 +37,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Add the C executable
 add_executable(njoritus src/main.c)
-
+target_link_libraries(njoritus ${APR_LIBRARY})
 # Specify include directories
-target_include_directories(njoritus PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(njoritus 
+            PRIVATE ${CMAKE_SOURCE_DIR}/include
+            PRIVATE ${APR_INCLUDE_DIR}
+)
