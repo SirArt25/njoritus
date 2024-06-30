@@ -36,8 +36,7 @@ add_custom_command(
   PRE_BUILD
   COMMAND "${CLANG_TIDY}" -p ${CMAKE_BINARY_DIR} ${SOURCE_FILES} --
           -I${CMAKE_SOURCE_DIR}/include -I${APR_INCLUDE_DIR}
-  COMMENT "Running clang-tidy..."
-  VERBATIM)
+  COMMENT "Running clang-tidy...")
 
 target_link_libraries(njoritus ${APR_LIBRARY})
 
