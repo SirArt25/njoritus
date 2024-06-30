@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 # Define the build directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 BUILD_DIR="${SCRIPT_DIR}/../build"
@@ -13,29 +13,33 @@ clean() {
   fi
 }
 
-# Function to configure and build the project
-build() {
-  # Create the build directory if it doesn't exist
+# configure cmake
+configure() {
   if [ ! -d "$BUILD_DIR" ]; then
     mkdir "$BUILD_DIR"
   fi
 
-  # Navigate to the build directory
   cd "$BUILD_DIR"
 
-  # Run CMake to configure the project
   cmake ..
 
-  # Build the project using the generated Makefile
+  cd -
+}
+
+# Function to configure and build the project
+build() {
+  configure
+
+  cd "$BUILD_DIR"
+
   cmake --build . -- -j12
 
-  # Return to the root directory
-  cd ..
+  cd -
 }
 
 # Display usage information
 usage() {
-  echo "Usage: $0 {build|clean|rebuild}"
+  echo "Usage: $0 {build|clean|rebuild|configure}"
   exit 1
 }
 
@@ -51,6 +55,9 @@ case $1 in
     ;;
   clean)
     clean
+    ;;
+  configure)
+    configure
     ;;
   rebuild)
     clean

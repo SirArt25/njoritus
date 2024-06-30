@@ -1,0 +1,50 @@
+name: Linting
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add git safe directory
+      run: git config --global --add safe.directory $(realpath .)
+
+    - name: Install CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: '3.22.1'
+
+    - name: Install APR
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y libapr1 libapr1-dev
+      shell: bash
+
+    - name: Install clang-tidy
+      run: |
+        sudo apt install clang-tidy
+      shell: bash
+
+    - name: Cofnigure Cmake
+      run: |
+        bash scripts/build.sh configure
+      shell: bash
+
+    - name: Download run-clang-tidy.py
+      run: |
+        wget https://raw.githubusercontent.com/llvm/llvm-project/main/clang-tools-extra/clang-tidy/tool/run-clang-tidy.py -O run-clang-tidy.py
+      shell: bash
+
+    - name: Run Clang-Tidy
+      run: |
+        python3 run-clang-tidy.py -p build
+      shell: bash

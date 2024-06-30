@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add git safe directory
+      run: git config --global --add safe.directory $(realpath .)
+
+    - name: Install CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: '3.22.1'
+
+    - name: Install APR
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y libapr1 libapr1-dev
+      shell: bash
+
+    - name: Build
+      run: |
+        bash scripts/build.sh build
+      shell: bash
