@@ -9,6 +9,8 @@
 
 # APR first.
 
+include(${CMAKE_CONFIG_DIR}/apr_config.cmake)
+
 FIND_PATH(APR_INCLUDE_DIR apr.h
         /opt/homebrew/opt/apr/include/apr-1
         /usr/local/include/apr-1
@@ -55,8 +57,7 @@ GET_FILENAME_COMPONENT (NATIVE_APR_LIB_PATH ${APR_LIBRARY} PATH)
 MARK_AS_ADVANCED(
         APR_LIBRARY
         APR_INCLUDE_DIR
-)
-
+) 
 # Next, APRUTIL.
 
 FIND_PATH(APRUTIL_INCLUDE_DIR apu.h

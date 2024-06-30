@@ -6,14 +6,16 @@ project(MyProject LANGUAGES C)
 set(CMAKE_C_COMPILER "gcc")
 set(CMAKE_CXX_COMPILER "g++")
 
-# include apr finding
-include(cmake/apr.cmake)
+set(CMAKE_CONFIG_DIR ${CMAKE_SOURCE_DIR}/cmake)
 
-# Set the output directory for runtime binaries (executables)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-# Optionally, set the output directory for library files if needed
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+# Include Compiler version checker
+include(${CMAKE_CONFIG_DIR}/check_c_compiler_version.cmake)
+
+# Include Cmake Config 
+include(${CMAKE_CONFIG_DIR}/config.cmake)
+
+# Include APR finding
+include(${CMAKE_CONFIG_DIR}/apr.cmake)
 
 
 # Set C standard
