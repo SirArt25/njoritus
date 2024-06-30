@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 # Define the build directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 BUILD_DIR="${SCRIPT_DIR}/../build"
