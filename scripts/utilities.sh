@@ -27,10 +27,12 @@ configure() {
   cd -
 }
 
-pure_build(){
+pure_build() {
   cd "$BUILD_DIR"
 
-  cmake --build . -- -j12
+  CORES=$(nproc)
+
+  cmake --build . -- -j$CORES
 
   cd -
 }
@@ -42,14 +44,14 @@ build() {
 }
 
 
-pure_lint(){
+pure_lint() {
   cd "$BUILD_DIR"
   cmake --build . --target clang-tidy-njoritus
   cd -
 }
 
 
-lint(){
+lint() {
   configure
   pure_lint
 }
