@@ -30,7 +30,9 @@ configure() {
 pure_build() {
   cd "$BUILD_DIR"
 
-  cmake --build . -- -j12
+  CORES=$(nproc)
+
+  cmake --build . -- -j$CORES
 
   cd -
 }
