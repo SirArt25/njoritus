@@ -3,7 +3,7 @@
 set - e
 
 # Define the BUILD_DIR
-BUILD_DIR = "${SCRIPT_DIR}/../build"
+BUILD_DIR="${SCRIPT_DIR}/../build"
 
 # Function to clean the build directory
 clean() {
