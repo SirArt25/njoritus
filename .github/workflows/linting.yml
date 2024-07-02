@@ -39,12 +39,7 @@ jobs:
         bash scripts/build.sh configure
       shell: bash
 
-    - name: Download run-clang-tidy.py
+    - name: Run clang-tidy
       run: |
-        wget https://raw.githubusercontent.com/llvm/llvm-project/main/clang-tools-extra/clang-tidy/tool/run-clang-tidy.py -O run-clang-tidy.py
-      shell: bash
-
-    - name: Run Clang-Tidy
-      run: |
-        python3 run-clang-tidy.py -p build
+        bash scripts/checks.sh lint
       shell: bash
