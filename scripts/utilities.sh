@@ -27,10 +27,7 @@ configure() {
   cd -
 }
 
-# Function to configure and build the project
-build() {
-  configure
-
+pure_build(){
   cd "$BUILD_DIR"
 
   cmake --build . -- -j12
@@ -38,8 +35,28 @@ build() {
   cd -
 }
 
-# Display usage information
-usage() {
-  echo "Usage: $0 {build|clean|rebuild|configure}"
-  exit 1
+# Function to configure and build the project
+build() {
+  configure
+  pure_build
+}
+
+
+pure_lint(){
+  cd "$BUILD_DIR"
+  cmake --build . --target clang-tidy-njoritus
+  cd -
+}
+
+
+lint(){
+  configure
+  pure_lint
+}
+
+
+build_with_checks(){
+  configure
+  pure_lint
+  pure_build
 }
