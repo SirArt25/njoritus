@@ -5,18 +5,7 @@ set -e
 echo "Installing CMake..."
 mkdir -p /opt/cmake
 
-architecture=$(dpkg --print-architecture)
-echo $architecture
-case "${architecture}" in
-    linux/arm/v5|linux/arm/v6|linux/arm/v7|linux/arm64|arm/v5|arm/v6|arm/v7|arm64)
-        ARCH=aarch64 ;;
-    linux/amd64|linux/i386|amd64|i386)
-        ARCH=x86_64 ;;
-    *)
-        echo "Unsupported architecture ${architecture}."
-        exit 1
-        ;;
-esac
+ARCH=$(uname -m)
 
 echo ${CMAKE_VERSION}
 CMAKE_BINARY_NAME="cmake-${CMAKE_VERSION}-linux-${ARCH}.sh"
