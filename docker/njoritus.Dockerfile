@@ -19,9 +19,29 @@ RUN DEBIAN_FRONTEND=noninteractive \
     ca-certificates \
     python3-pip \
     python3-dev  \
+    gnupg \
+    gnupg2 \
+    gnupg1 \
+    lsb-release \
+    software-properties-common \
   && rm -rf /var/lib/apt/lists/*
+
+
+# Add LLVM repository and install clang-tidy 14
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+    add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" && \
+    apt-get update && \
+    apt-get install -y clang-tidy-14
+
+# Set clang-tidy 14 as the default
+RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-14 100
+
+# Verify installation
+RUN clang-tidy --version
 
 WORKDIR /workspace
 
-
-copy ${DOCKER_DIR}/scripts/cmake_install.sh /cmake_install.sh
+# Copy cmake_install.sh and install cmake
+COPY ${DOCKER_DIR}/scripts/cmake_install.sh /workspace/env_scripts/cmake_install.sh
+RUN chmod +x /workspace/env_scripts/cmake_install.sh
+RUN CMAKE_VERSION=3.22.1 /workspace/env_scripts/cmake_install.sh
