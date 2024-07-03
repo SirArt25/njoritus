@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies of telebot
       run: |
         sudo apt update -y
-        sudo apt install -y git pkg-config libjson-c-dev
+        sudo apt install -y git pkg-config libjson-c-dev libcurl
       shell: bash
 
     - name: Build

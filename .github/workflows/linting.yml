@@ -31,18 +31,22 @@ jobs:
 
     - name: Install clang-tidy
       run: |
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"
-        sudo apt update
-        apt install -y clang-tidy-14 pkg-config
-        update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-14 100
+        curl -fsSL "https://apt.llvm.org/llvm-snapshot.gpg.key" | \
+            gpg --dearmor | \
+            sudo tee /usr/share/keyrings/llvm-snapshot-keyring.gpg > /dev/null
+        echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot-keyring.gpg] http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" | \
+            sudo tee /etc/apt/sources.list.d/llvm.list
+        apt update
+        apt install -y clang-tidy-14
+        sudo ln -s /usr/bin/clang-tidy-14 /usr/bin/clang-tidy
       shell: bash
 
     - name: Install dependencies of telebot
       run: |
         sudo apt update -y
-        sudo apt install -y git pkg-config libjson-c-dev
+        sudo apt install -y git pkg-config libjson-c-dev libcurl
       shell: bash
+
 
     - name: Cofnigure Cmake
       run: |
