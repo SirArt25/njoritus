@@ -48,3 +48,9 @@ RUN DEBIAN_FRONTEND=noninteractive \
     git \
     pkg-config \
   && rm -rf /var/lib/apt/lists/*
+
+# Add tools for managing tokens
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt update \
+  && apt install -y libsecret-1-dev \
+&& rm -rf /var/lib/apt/lists/*
