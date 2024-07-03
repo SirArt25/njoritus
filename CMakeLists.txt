@@ -32,9 +32,6 @@ add_executable(njoritus src/main.c)
 
 target_link_libraries(njoritus ${APR_LIBRARY})
 
-# include secret-manipulate.cmake
-include(${CMAKE_CONFIG_DIR}/secret-manipulate.cmake)
-
 # Specify include directories
 foreach(dir IN LISTS INCLUDES_LIST)
   target_include_directories(njoritus PRIVATE ${dir})
@@ -56,3 +53,5 @@ add_dependencies(clang-tidy-njoritus telebot)
 
 # Inlcude thor-shield
 include(${CMAKE_CONFIG_DIR}/thor-shield.cmake)
+
+add_dependencies(njoritus thor-shield)
