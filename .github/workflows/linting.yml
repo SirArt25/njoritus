@@ -44,7 +44,7 @@ jobs:
     - name: Install dependencies of telebot
       run: |
         sudo apt update -y
-        sudo apt install -y git pkg-config libjson-c-dev curl
+        sudo apt install -y git pkg-config libjson-c-dev libcurl4-openssl-dev
       shell: bash
 
 
