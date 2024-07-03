@@ -46,3 +46,6 @@ add_custom_target(
     "${CLANG_TIDY}" -p ${CMAKE_BINARY_DIR} ${SOURCE_FILES} --
     -I${CMAKE_SOURCE_DIR}/include -I${APR_INCLUDE_DIR} -I${TELEBOT_INCLUDE_DIR}
   COMMENT "Running clang-tidy...")
+
+# for making linting ok
+add_dependencies(clang-tidy-njoritus telebot)

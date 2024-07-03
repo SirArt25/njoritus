@@ -38,3 +38,11 @@ RUN clang-tidy --version
 COPY ${DOCKER_DIR}/scripts/cmake_install.sh /workspace/env_scripts/cmake_install.sh
 RUN chmod +x /workspace/env_scripts/cmake_install.sh
 RUN CMAKE_VERSION=3.22.1 /workspace/env_scripts/cmake_install.sh
+
+
+# Add dependency of telebot
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt update \
+  && apt install -y libcurl4-openssl-dev \
+    libjson-c-dev \
+  && rm -rf /var/lib/apt/lists/*
