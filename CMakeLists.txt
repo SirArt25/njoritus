@@ -18,6 +18,9 @@ include(${CMAKE_CONFIG_DIR}/check_c_compiler_version.cmake)
 # Include Cmake Config
 include(${CMAKE_CONFIG_DIR}/config.cmake)
 
+# Include External Projects
+include(${CMAKE_CONFIG_DIR}/external_projects.cmake)
+
 # Include APR finding If you want verbose set APR_FIND_VERBOSE
 set(APR_FIND_VERBOSE True)
 include(${CMAKE_CONFIG_DIR}/apr.cmake)
