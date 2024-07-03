@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 source ${SCRIPT_DIR}/utilities.sh
 
 usage() {
-  echo "Usage: $0 {build|clean|rebuild|configure|build_with_checks}"
+  echo "Usage: $0 {build|rebuild|configure|build_with_checks}"
   exit 1
 }
 
@@ -19,9 +19,6 @@ case $1 in
     ;;
   build_with_checks)
     build_with_checks
-    ;;
-  clean)
-    clean
     ;;
   configure)
     configure

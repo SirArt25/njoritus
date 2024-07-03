@@ -18,6 +18,8 @@ include(${CMAKE_CONFIG_DIR}/check_c_compiler_version.cmake)
 # Include Cmake Config
 include(${CMAKE_CONFIG_DIR}/config.cmake)
 
+# Include External Projects include(${CMAKE_CONFIG_DIR}/external_projects.cmake)
+
 # Include APR finding If you want verbose set APR_FIND_VERBOSE
 set(APR_FIND_VERBOSE True)
 include(${CMAKE_CONFIG_DIR}/apr.cmake)
@@ -34,3 +36,16 @@ target_link_libraries(njoritus ${APR_LIBRARY})
 foreach(dir IN LISTS INCLUDES_LIST)
   target_include_directories(njoritus PRIVATE ${dir})
 endforeach()
+
+# Inlcude telebot external project
+include(${CMAKE_CONFIG_DIR}/telebot.cmake)
+
+add_custom_target(
+  clang-tidy-njoritus
+  COMMAND
+    "${CLANG_TIDY}" -p ${CMAKE_BINARY_DIR} ${SOURCE_FILES} --
+    -I${CMAKE_SOURCE_DIR}/include -I${APR_INCLUDE_DIR} -I${TELEBOT_INCLUDE_DIR}
+  COMMENT "Running clang-tidy...")
+
+# for making linting ok
+add_dependencies(clang-tidy-njoritus telebot)
