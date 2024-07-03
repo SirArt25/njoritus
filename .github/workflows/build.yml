@@ -27,6 +27,12 @@ jobs:
         sudo apt install -y libapr1 libapr1-dev
       shell: bash
 
+    - name: Install dependencies of telebot
+      run: |
+        sudo apt update -y
+        sudo apt install -y git pkg-config libjson-c-dev
+      shell: bash
+
     - name: Build
       run: |
         bash scripts/build.sh build
