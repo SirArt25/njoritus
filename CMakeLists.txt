@@ -34,3 +34,6 @@ target_link_libraries(njoritus ${APR_LIBRARY})
 foreach(dir IN LISTS INCLUDES_LIST)
   target_include_directories(njoritus PRIVATE ${dir})
 endforeach()
+
+# Inlcude telebot external project
+include(${CMAKE_CONFIG_DIR}/telebot.cmake)
