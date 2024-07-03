@@ -31,8 +31,11 @@ jobs:
 
     - name: Install clang-tidy
       run: |
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"
+        curl -fsSL "https://apt.llvm.org/llvm-snapshot.gpg.key" | \
+            sudo gpg --dearmor | \
+            sudo tee /usr/share/keyrings/llvm-snapshot-keyring.gpg > /dev/null
+        echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot-keyring.gpg] http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" | \
+            sudo tee /etc/apt/sources.list.d/llvm.list
         sudo apt update
         sudo apt install -y clang-tidy-14
         sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-14 100
