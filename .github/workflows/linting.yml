@@ -31,14 +31,9 @@ jobs:
 
     - name: Install clang-tidy
       run: |
-        curl -fsSL "https://apt.llvm.org/llvm-snapshot.gpg.key" | \
-            gpg --dearmor | \
-            sudo tee /usr/share/keyrings/llvm-snapshot-keyring.gpg > /dev/null
-        echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot-keyring.gpg] http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" | \
-            sudo tee /etc/apt/sources.list.d/llvm.list
-        apt update
-        apt install -y clang-tidy-14
-        update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-14 100
+        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.6/clang+llvm-14.0.6-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+        tar -xf clang+llvm-14.0.6-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+        sudo cp -r clang+llvm-14.0.6-x86_64-linux-gnu-ubuntu-18.04/* /usr/local/
       shell: bash
 
     - name: Cofnigure Cmake
