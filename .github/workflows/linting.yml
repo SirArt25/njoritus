@@ -26,7 +26,7 @@ jobs:
     - name: Install APR
       run: |
         sudo apt update -y
-        sudo apt install -y libapr1 libapr1-dev
+        sudo apt install -y libapr1 libapr1-dev software-properties-common
       shell: bash
 
     - name: Install clang-tidy
@@ -35,7 +35,7 @@ jobs:
         sudo add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"
         sudo apt update
         sudo apt install -y clang-tidy-14
-        ln -s /usr/bin/clang-tidy-14 /usr/bin/clang-tidy
+        sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-14 100
       shell: bash
 
     - name: Install dependencies of telebot
