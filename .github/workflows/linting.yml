@@ -25,23 +25,23 @@ jobs:
 
     - name: Install APR
       run: |
-        sudo apt update -y
-        sudo apt install -y libapr1 libapr1-dev
+        apt update -y
+        apt install -y libapr1 libapr1-dev
       shell: bash
 
     - name: Install clang-tidy
       run: |
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"
-        sudo apt update
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+        add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"
+        apt update
         apt install -y clang-tidy-14
-        sudo ln -s /usr/bin/clang-tidy-14 /usr/bin/clang-tidy
+        ln -s /usr/bin/clang-tidy-14 /usr/bin/clang-tidy
       shell: bash
 
     - name: Install dependencies of telebot
       run: |
-        sudo apt update -y
-        sudo apt install -y git pkg-config libjson-c-dev curl
+        apt update -y
+        apt install -y git pkg-config libjson-c-dev curl
       shell: bash
 
 
