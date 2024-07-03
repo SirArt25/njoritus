@@ -11,6 +11,7 @@ Checks: >
   bugprone-integer-division,
   bugprone-suspicious-memset-usage,
   bugprone-sizeof-expression,
+  clang-analyzer-*,
   clang-analyzer-core.NullDereference,
   clang-analyzer-core.UndefinedBinaryOperatorResult,
   clang-analyzer-security.insecureAPI.strcpy,

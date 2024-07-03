@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <telebot.h>
 
+
 int main() {
     char message[] = "Hello, C17!";
     printf("%s\n", message);
@@ -20,7 +21,7 @@ int main() {
         apr_terminate();
         return 1;
     }
-
+    //read_secret("asdads");
     // printf("Welcome to njoritus\n");
 
     // FILE *fp = fopen(".token", "r");
