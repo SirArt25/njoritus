@@ -18,8 +18,7 @@ include(${CMAKE_CONFIG_DIR}/check_c_compiler_version.cmake)
 # Include Cmake Config
 include(${CMAKE_CONFIG_DIR}/config.cmake)
 
-# Include External Projects
-include(${CMAKE_CONFIG_DIR}/external_projects.cmake)
+# Include External Projects include(${CMAKE_CONFIG_DIR}/external_projects.cmake)
 
 # Include APR finding If you want verbose set APR_FIND_VERBOSE
 set(APR_FIND_VERBOSE True)
@@ -41,7 +40,6 @@ endforeach()
 # Inlcude telebot external project
 include(${CMAKE_CONFIG_DIR}/telebot.cmake)
 
-message(STATUS "TELEBOT_INCLUDE_DIR = ${TELEBOT_INCLUDE_DIR}")
 add_custom_target(
   clang-tidy-njoritus
   COMMAND

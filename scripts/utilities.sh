@@ -4,16 +4,6 @@ set -e
 # Define the BUILD_DIR
 BUILD_DIR="${SCRIPT_DIR}/../build"
 
-# Function to clean the build directory
-clean() {
-  if [ -d "$BUILD_DIR" ]; then
-    echo "Removing existing build directory."
-    rm -rf "$BUILD_DIR"
-  else
-    echo "Build directory does not exist, nothing to clean."
-  fi
-}
-
 # configure cmake
 configure() {
   if [ ! -d "$BUILD_DIR" ]; then
@@ -43,6 +33,29 @@ build() {
   pure_build
 }
 
+
+clean() {
+  if [ -d "$BUILD_DIR" ]; then
+    cd "$BUILD_DIR"
+
+    cmake --build . --target clean
+
+    cd -
+  else
+    echo "Build directory does not exist, nothing to clean."
+  fi
+}
+
+rmdir-build-dir() {
+  if [ -d "$BUILD_DIR" ]; then
+    rm -rf "$BUILD_DIR"
+  fi
+}
+
+clean-all() {
+  clean
+  rmdir-build-dir
+}
 
 pure_lint() {
   cd "$BUILD_DIR"
