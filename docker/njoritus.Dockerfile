@@ -45,4 +45,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
   apt update \
   && apt install -y libcurl4-openssl-dev \
     libjson-c-dev \
+    git \
+    pkg-config \
   && rm -rf /var/lib/apt/lists/*
