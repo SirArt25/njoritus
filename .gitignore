@@ -85,3 +85,7 @@ Makefile
 /test_data/outputs/
 # Dependency directories
 /deps/
+
+
+# external_projects
+external_projects/*/
