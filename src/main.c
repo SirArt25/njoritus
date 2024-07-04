@@ -3,12 +3,11 @@
 #include <apr_pools.h>
 #include <string.h>
 #include <unistd.h>
+#include <thor-shield/dec.h>
 #include <telebot.h>
 
 
 int main() {
-    char message[] = "Hello, C17!";
-    printf("%s\n", message);
     apr_pool_t *pool = NULL;
 
     if (apr_initialize() != APR_SUCCESS) {
@@ -21,6 +20,9 @@ int main() {
         apr_terminate();
         return 1;
     }
+
+
+
     //read_secret("asdads");
     // printf("Welcome to njoritus\n");
 

@@ -1,4 +1,4 @@
-#include <thor-shield/mjolnir.h>
+#include <mjolnir.h>
 
 const SecretSchema mjolnir = {
     "com.example.ServiceOnly", // Unique names for mjolnir

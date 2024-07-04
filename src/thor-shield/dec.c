@@ -1,4 +1,4 @@
-#include <thor-shield/dec.h>
+#include <dec.h>
 
 gchar * loadSecret(const char * cpSeviceName) {
     GError *pGerror = NULL;

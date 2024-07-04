@@ -59,6 +59,7 @@ clean-all() {
 
 pure_lint() {
   cd "$BUILD_DIR"
+  cmake --build . --target clang-tidy-thor-shield
   cmake --build . --target clang-tidy-njoritus
   cd -
 }

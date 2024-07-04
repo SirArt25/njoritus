@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <thor-shield/enc.h>
-#include <thor-shield/dec.h>
+#include <enc.h>
+#include <dec.h>
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {

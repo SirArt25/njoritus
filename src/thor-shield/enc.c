@@ -1,4 +1,4 @@
-#include <thor-shield/enc.h>
+#include <enc.h>
 
 int saveSecret(const char * cpLabel, const char * cpToken,
                  const char * cpSeviceName) {
