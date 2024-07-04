@@ -9,4 +9,6 @@
 
 extern const SecretSchema mjolnir;
 
+void securePrint(const char* pData);
+
 #endif // THOR_SHIELD_MJOLNIR_H

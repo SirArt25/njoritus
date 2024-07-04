@@ -5,13 +5,13 @@ gchar * loadSecret(const char * cpSeviceName) {
 
     gchar * pToken = secret_password_lookup_sync(
         &mjolnir, NULL,
-        &error,
+        &pGerror,
         "service", cpSeviceName,
         NULL);
 
-    if (error) {
-        fprintf(stderr, "Error retrieving secret: %s\n", error->message);
-        g_error_free(error);
+    if (pGerror) {
+        fprintf(stderr, "Error retrieving secret: %s\n", pGerror->message);
+        g_error_free(pGerror);
         return NULL;
     }
     return pToken;
