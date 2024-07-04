@@ -55,3 +55,4 @@ add_dependencies(clang-tidy-njoritus telebot)
 include(${CMAKE_CONFIG_DIR}/thor-shield.cmake)
 
 add_dependencies(njoritus thor-shield)
+add_dependencies(njoritus thor-shield-lib)
