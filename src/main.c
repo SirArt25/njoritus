@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <thor-shield/dec.h>
 #include <telebot.h>
-
+#include <dec.h>
 
 int main() {
     apr_pool_t *pool = NULL;
@@ -14,7 +14,6 @@ int main() {
         fprintf(stderr, "Failed to initialize APR\n");
         return 1;
     }
-
     if (apr_pool_create(&pool, NULL) != APR_SUCCESS) {
         fprintf(stderr, "Failed to create memory pool\n");
         apr_terminate();
@@ -22,7 +21,7 @@ int main() {
     }
 
 
-
+    gchar * p_token = loadSecret("mjorn");
     //read_secret("asdads");
     // printf("Welcome to njoritus\n");
 

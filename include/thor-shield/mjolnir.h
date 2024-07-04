@@ -5,10 +5,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libsecret/secret.h>
-
+#include <apr.h>
+#include <apr_file_io.h>
+#include <apr_portable.h>
 
 extern const SecretSchema mjolnir;
 
-void securePrint(const char* pData);
+int secureExport(apr_pool_t *p_parent_pool, const char* cp_data,
+                const char *p_path);
 
 #endif // THOR_SHIELD_MJOLNIR_H

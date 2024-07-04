@@ -3,9 +3,9 @@
 
 #include <mjolnir.h>
 
-int saveSecret(const char * cpLabel, const char * cpToken,
-                 const char * cpSeviceName);
+int saveSecret(const char * cp_label, const char * cp_token,
+                 const char * cp_sevice_name);
 
-char * readTokenFromFile(const char *pPath);
+char * readTokenFromFile(apr_pool_t *p_parent_pool, const char *p_path);
 
 #endif // THOR_SHIELD_ENC_H

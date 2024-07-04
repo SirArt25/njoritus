@@ -1,18 +1,24 @@
 #include <dec.h>
 
-gchar * loadSecret(const char * cpSeviceName) {
-    GError *pGerror = NULL;
+/**
+ * @brief
+ *
+ * @param cp_sevice_name
+ * @return gchar*
+ */
+gchar * loadSecret(const char * cp_sevice_name) {
+    GError *p_gerror = NULL;
 
-    gchar * pToken = secret_password_lookup_sync(
+    gchar * p_token = secret_password_lookup_sync(
         &mjolnir, NULL,
-        &pGerror,
-        "service", cpSeviceName,
+        &p_gerror,
+        "service", cp_sevice_name,
         NULL);
 
-    if (pGerror) {
-        fprintf(stderr, "Error retrieving secret: %s\n", pGerror->message);
-        g_error_free(pGerror);
+    if (p_gerror) {
+        fprintf(stderr, "Error retrieving secret: %s\n", p_gerror->message);
+        g_error_free(p_gerror);
         return NULL;
     }
-    return pToken;
+    return p_token;
 }

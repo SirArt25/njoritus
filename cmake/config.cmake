@@ -9,3 +9,5 @@ file(GLOB SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/*.c")
 set(INCLUDES_LIST ${CMAKE_SOURCE_DIR}/include)
 
 set(EXTERNAL_PROJECTS_DIR ${CMAKE_SOURCE_DIR}/external_projects)
+
+set(DEV_NULL /dev/null)
