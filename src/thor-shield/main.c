@@ -56,9 +56,9 @@ int main(int argc, char *argv[]) {
         if(p_token == NULL) {
             return exit_pool_destroy(p_parent_pool, EXIT_FAILURE);
         }
-
+        const size_t TOKEN_SIZE = 1024;
         if(secureExport(p_parent_pool, p_token, key_path) == EXIT_FAILURE) {
-            purgePointer(p_token);
+            purgePointer(p_token, TOKEN_SIZE * sizeof(char));
             return exit_pool_destroy(p_parent_pool, EXIT_FAILURE);;
         }
     } else {
