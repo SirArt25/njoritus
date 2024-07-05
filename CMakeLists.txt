@@ -32,20 +32,16 @@ add_executable(njoritus src/main.c)
 
 target_link_libraries(njoritus ${APR_LIBRARY})
 
+# Inlcude telebot external project
+include(${CMAKE_CONFIG_DIR}/telebot.cmake)
+
+# Inlcude thor-shield
+include(${CMAKE_CONFIG_DIR}/thor-shield.cmake)
+
 # Specify include directories
 foreach(dir IN LISTS INCLUDES_LIST)
   target_include_directories(njoritus PRIVATE ${dir})
 endforeach()
 
-# Inlcude telebot external project
-include(${CMAKE_CONFIG_DIR}/telebot.cmake)
-
-add_custom_target(
-  clang-tidy-njoritus
-  COMMAND
-    "${CLANG_TIDY}" -p ${CMAKE_BINARY_DIR} ${SOURCE_FILES} --
-    -I${CMAKE_SOURCE_DIR}/include -I${APR_INCLUDE_DIR} -I${TELEBOT_INCLUDE_DIR}
-  COMMENT "Running clang-tidy...")
-
-# for making linting ok
-add_dependencies(clang-tidy-njoritus telebot)
+# Include linting.cmake for creating linting targets
+include(${CMAKE_CONFIG_DIR}/linting.cmake)
