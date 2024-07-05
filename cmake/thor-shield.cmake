@@ -7,10 +7,16 @@ add_definitions(${LIBSECRET_CFLAGS_OTHER})
 
 # define include and source files of thor-shield
 set(THOR_SHIELD_INCLUDE_LIST ${CMAKE_SOURCE_DIR}/include/thor-shield)
+list(APPEND THOR_SHIELD_INCLUDE_LIST ${CMAKE_SOURCE_DIR}/include/utilities)
+
 file(GLOB THOR_SHIELD_SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/thor-shield/*.c")
+
+list(APPEND THOR_SHIELD_SOURCE_FILES
+     ${CMAKE_SOURCE_DIR}/src/utilities/utilities.c)
 
 list(REMOVE_ITEM THOR_SHIELD_SOURCE_FILES
      ${CMAKE_SOURCE_DIR}/src/thor-shield/main.c)
+
 add_executable(thor-shield src/thor-shield/main.c ${THOR_SHIELD_SOURCE_FILES})
 
 add_library(thor-shield-lib ${THOR_SHIELD_SOURCE_FILES})

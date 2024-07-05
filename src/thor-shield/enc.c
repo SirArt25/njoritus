@@ -1,5 +1,6 @@
 #include <enc.h>
-
+#include <apr_strings.h>
+#include <utilities.h>
 /**
  * @brief
  *
@@ -82,7 +83,9 @@ char * readTokenFromFile(apr_pool_t *p_parent_pool, const char *cp_path) {
         apr_pool_destroy(p_child_pool);
         return NULL;
     }
-    apr_cpystrn(p_token_parent, p_token, TOKEN_SIZE * sizeof(char));
+
+    p_token_parent = memcpy(p_token_parent, p_token, strlen(p_token));
+    purgePointer(p_token, TOKEN_SIZE * sizeof(char));
 
     apr_pool_destroy(p_child_pool);
 

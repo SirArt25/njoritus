@@ -11,7 +11,7 @@
 
 extern const SecretSchema mjolnir;
 
-int secureExport(apr_pool_t *p_parent_pool, const char* cp_data,
+int secureExport(apr_pool_t *p_parent_pool, char* p_data,
                 const char *p_path);
 
 #endif // THOR_SHIELD_MJOLNIR_H
