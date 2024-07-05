@@ -2,7 +2,9 @@
 
 void purgePointer(volatile void *data, size_t len) {
 
-    if(data == NULL) return;
+    if(data == NULL) {
+        return;
+    }
 
     volatile char *p_vol_data = (volatile char *)data;
 

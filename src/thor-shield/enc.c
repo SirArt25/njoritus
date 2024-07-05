@@ -6,7 +6,7 @@
  *
  * @param cp_label
  * @param cp_token
- * @param cp_sevice_name
+ * @param cp_service_name
  * @return int
  */
 int saveSecret(const char * cp_label, const char * cp_token,
@@ -84,7 +84,7 @@ char * readTokenFromFile(apr_pool_t *p_parent_pool, const char *cp_path) {
         return NULL;
     }
 
-    p_token_parent = memcpy(p_token_parent, p_token, strlen(p_token));
+    p_token_parent = strncpy(p_token_parent, p_token, strlen(p_token));
     purgePointer(p_token, TOKEN_SIZE * sizeof(char));
 
     apr_pool_destroy(p_child_pool);

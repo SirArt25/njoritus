@@ -70,3 +70,5 @@ CheckOptions:
     value:           'Abstract'
   - key:             readability-identifier-naming.InterfaceClassPrefix
     value:           'I'
+  - key:             readability-function-size.LineLimit
+    value:           '80'

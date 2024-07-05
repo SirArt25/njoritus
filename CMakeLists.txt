@@ -28,7 +28,7 @@ include(${CMAKE_CONFIG_DIR}/apr.cmake)
 include(${CMAKE_CONFIG_DIR}/clang_tidy_verifier.cmake)
 
 # Add the C executable
-add_executable(njoritus src/main.c)
+add_executable(njoritus ${NJORITUS_SOURCE_FILES})
 
 target_link_libraries(njoritus ${APR_LIBRARY})
 
