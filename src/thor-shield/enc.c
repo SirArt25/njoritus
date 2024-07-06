@@ -1,6 +1,7 @@
 #include <enc.h>
 #include <apr_strings.h>
 #include <utilities.h>
+
 /**
  * @brief
  *
@@ -10,7 +11,7 @@
  * @return int
  */
 int saveSecret(const char * cp_label, const char * cp_token,
-                 const char * cp_service_name) {
+                                                const char * cp_service_name) {
     GError *p_gerror = NULL;
 
     gboolean result = secret_password_store_sync(
@@ -59,7 +60,8 @@ char * readTokenFromFile(apr_pool_t *p_parent_pool, const char *cp_path) {
     }
 
     const size_t TOKEN_SIZE = 1024;
-    char * p_token = (char *)apr_palloc(p_child_pool, TOKEN_SIZE * sizeof(char));
+    char * p_token = (char *)apr_palloc(p_child_pool,
+                                                     TOKEN_SIZE * sizeof(char));
 
     if (p_token == NULL) {
         apr_file_close(p_token_file);
@@ -76,7 +78,8 @@ char * readTokenFromFile(apr_pool_t *p_parent_pool, const char *cp_path) {
     }
     apr_file_close(p_token_file);
 
-    char *p_token_parent = (char *)apr_palloc(p_parent_pool, TOKEN_SIZE * sizeof(char));
+    char *p_token_parent = (char *)apr_palloc(p_parent_pool,
+                                                    TOKEN_SIZE * sizeof(char));
 
     if (p_token_parent == NULL) {
         apr_file_close(p_token_file);

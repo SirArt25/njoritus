@@ -16,50 +16,80 @@ apr_status_t  initQueryClassifierConfig(QueryClassifierConfig *this,
         return status;
     }
 
-    this->m_p_pairs_pattern_type = apr_array_make(this->m_p_pool, 2,
-            sizeof(PatternTypePair));
+    this->m_array_pattern_configs = apr_array_make(this->m_p_pool, 2,
+            sizeof(QuerryPattern));
 
-    if (this->m_p_pairs_pattern_type == NULL) {
+    if (this->m_array_pattern_configs == NULL) {
         apr_pool_destroy(this->m_p_pool);
         return APR_ENOMEM;
     }
     return APR_SUCCESS;
 }
 
-apr_status_t addPatternTypePair(QueryClassifierConfig *this,
-        const char *p_pattern, QueryType type) {
+/**
+ * @brief
+ *
+ * @param this
+ * @param p_pattern
+ * @param type
+ * @param semanticCheck
+ * @return apr_status_t
+ */
+apr_status_t addPatternConfig(QueryClassifierConfig *this,
+            const char *p_pattern, SemanticChecker checker, QueryType type) {
 
-    PatternTypePair *pair = (PatternTypePair *)
-        apr_array_push(this->m_p_pairs_pattern_type);
+    QuerryPattern *p_pattern_config = (QuerryPattern *)
+        apr_array_push(this->m_array_pattern_configs);
 
-    if (pair == NULL) {
+    if (p_pattern_config == NULL) {
         return APR_ENOMEM;
     }
-    pair->m_p_pattern = p_pattern;
-    pair->type = type;
+
+    p_pattern_config->m_pattern_config.m_p_pattern
+                    = p_pattern;
+    p_pattern_config->m_pattern_config.m_semantic_checker
+                    = checker;
+    p_pattern_config->m_type = type;
 
     return APR_SUCCESS;
 }
 
-
+/**
+ * @brief
+ *
+ * @param QueryClassifierConfig
+ */
 void terminateQueryClassifierConfig(QueryClassifierConfig *this){
     if (this != NULL && this->m_p_pool != NULL) {
         apr_pool_destroy(this->m_p_pool);
     }
 }
 
-
+/**
+ * @brief Get the Query Count object
+ *
+ * @param this
+ * @return int
+ */
 int getQueryCount(const QueryClassifierConfig *this) {
     if(this == NULL) {
         return -1;
     }
-    return this->m_p_pairs_pattern_type->nelts;
+    return this->m_array_pattern_configs->nelts;
 }
 
-PatternTypePair* atQueryClassifierConfig(const QueryClassifierConfig *this, int index) {
+/**
+ * @brief
+ *
+ * @param this
+ * @param index
+ * @return PatternConfig*
+ */
+QuerryPattern* atQueryClassifierConfig(const QueryClassifierConfig *this,
+                                                                    int index) {
     if (index < 0 || index >= getQueryCount(this)) {
         return NULL;
     }
-    PatternTypePair *pairs = (PatternTypePair *)this->m_p_pairs_pattern_type->elts;
+    QuerryPattern *pairs = (QuerryPattern *)this->m_array_pattern_configs->elts;
     return &pairs[index];
 }
