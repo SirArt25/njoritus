@@ -9,7 +9,10 @@ add_definitions(${LIBSECRET_CFLAGS_OTHER})
 set(THOR_SHIELD_INCLUDE_LIST ${CMAKE_SOURCE_DIR}/include/thor-shield)
 list(APPEND THOR_SHIELD_INCLUDE_LIST ${CMAKE_SOURCE_DIR}/include/utilities)
 
-file(GLOB THOR_SHIELD_SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/thor-shield/*.c")
+file(GLOB_RECURSE THOR_SHIELD_SOURCE_FILES
+     "${CMAKE_SOURCE_DIR}/src/thor-shield/*.c")
+file(GLOB_RECURSE THOR_SHIELD_HEADER_FILES
+     "${CMAKE_SOURCE_DIR}/include/thor-shield/*.h")
 
 list(APPEND THOR_SHIELD_SOURCE_FILES
      ${CMAKE_SOURCE_DIR}/src/utilities/utilities.c)

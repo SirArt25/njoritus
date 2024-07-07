@@ -8,8 +8,8 @@ ExternalProject_Add(
   INSTALL_COMMAND "")
 
 ExternalProject_Get_Property(telebot source_dir binary_dir)
-set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
-                                    "${EXTERNAL_PROJECTS_DIR}/telebot")
+
+set(ADDITIONAL_CLEAN_FILES "${EXTERNAL_PROJECTS_DIR}/telebot")
 set(TELEBOT_INCLUDE_DIR ${source_dir}/include)
 set(TELEBOT_LIB_DIR ${binary_dir})
 

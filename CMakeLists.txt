@@ -18,8 +18,6 @@ include(${CMAKE_CONFIG_DIR}/check_c_compiler_version.cmake)
 # Include Cmake Config
 include(${CMAKE_CONFIG_DIR}/config.cmake)
 
-# Include External Projects include(${CMAKE_CONFIG_DIR}/external_projects.cmake)
-
 # Include APR finding If you want verbose set APR_FIND_VERBOSE
 set(APR_FIND_VERBOSE True)
 include(${CMAKE_CONFIG_DIR}/apr.cmake)
@@ -45,3 +43,11 @@ endforeach()
 
 # Include linting.cmake for creating linting targets
 include(${CMAKE_CONFIG_DIR}/linting.cmake)
+
+# Include odin-gaze
+include(${CMAKE_CONFIG_DIR}/odin-gaze.cmake)
+
+# Add aditional clean files
+list(JOIN ADDITIONAL_CLEAN_FILES ";" ADDITIONAL_CLEAN_FILES_STRING)
+set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
+                                    "${ADDITIONAL_CLEAN_FILES_STRING}")
