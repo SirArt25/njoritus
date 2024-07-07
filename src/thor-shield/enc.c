@@ -1,16 +1,17 @@
 #include <enc.h>
 #include <apr_strings.h>
 #include <utilities.h>
+
 /**
  * @brief
  *
  * @param cp_label
  * @param cp_token
- * @param cp_sevice_name
+ * @param cp_service_name
  * @return int
  */
 int saveSecret(const char * cp_label, const char * cp_token,
-                 const char * cp_service_name) {
+                                                const char * cp_service_name) {
     GError *p_gerror = NULL;
 
     gboolean result = secret_password_store_sync(
@@ -59,7 +60,8 @@ char * readTokenFromFile(apr_pool_t *p_parent_pool, const char *cp_path) {
     }
 
     const size_t TOKEN_SIZE = 1024;
-    char * p_token = (char *)apr_palloc(p_child_pool, TOKEN_SIZE * sizeof(char));
+    char * p_token = (char *)apr_palloc(p_child_pool,
+                                                     TOKEN_SIZE * sizeof(char));
 
     if (p_token == NULL) {
         apr_file_close(p_token_file);
@@ -76,7 +78,8 @@ char * readTokenFromFile(apr_pool_t *p_parent_pool, const char *cp_path) {
     }
     apr_file_close(p_token_file);
 
-    char *p_token_parent = (char *)apr_palloc(p_parent_pool, TOKEN_SIZE * sizeof(char));
+    char *p_token_parent = (char *)apr_palloc(p_parent_pool,
+                                                    TOKEN_SIZE * sizeof(char));
 
     if (p_token_parent == NULL) {
         apr_file_close(p_token_file);
@@ -84,7 +87,7 @@ char * readTokenFromFile(apr_pool_t *p_parent_pool, const char *cp_path) {
         return NULL;
     }
 
-    p_token_parent = memcpy(p_token_parent, p_token, strlen(p_token));
+    p_token_parent = strncpy(p_token_parent, p_token, strlen(p_token));
     purgePointer(p_token, TOKEN_SIZE * sizeof(char));
 
     apr_pool_destroy(p_child_pool);

@@ -5,7 +5,6 @@ if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
   endif()
 else()
   message(
-    WARNING
-      "You are using an unsupported compiler! Compilation has only been tested with GCC."
-  )
+    WARNING "You are using an unsupported compiler! Compilation has only been"
+            " tested with GCC.")
 endif()

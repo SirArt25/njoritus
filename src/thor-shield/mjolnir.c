@@ -20,7 +20,9 @@ const SecretSchema mjolnir = {
  */
 int secureExport(apr_pool_t *p_parent_pool, char* p_data,
                 const char *p_path) {
-    if (p_parent_pool == NULL || p_data == NULL || p_path == NULL) return EXIT_FAILURE;
+    if (p_parent_pool == NULL || p_data == NULL || p_path == NULL){
+        return EXIT_FAILURE;
+    }
 
     apr_pool_t *p_child_pool = NULL;
     apr_status_t status = apr_pool_create(&p_child_pool, p_parent_pool);
