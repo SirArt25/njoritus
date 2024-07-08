@@ -1,5 +1,6 @@
 #include <njoritus/semantic_checkers/cordinate_checker.h>
 #include <stdlib.h>
+#include <utilities.h>
 
 int validateCoordinates(const Coordinates *coords) {
   double lat = atof(coords->cp_latitude);
@@ -28,12 +29,10 @@ int cordinateChecker(const RegexWrapper *cp_regex_wrapper, const char *cp_str,
   if (isRegexWrapperCompiled(cp_regex_wrapper) == FALSE) {
     return -1;
   }
-
-  apr_pool_t *p_pool = NULL;
-  if (apr_pool_create(&p_pool, p_parent_pool) != APR_SUCCESS) {
+  apr_pool_t *p_pool;
+  if (initializePool(&p_pool, p_parent_pool) != APR_SUCCESS) {
     return -1;
   }
-
   const int MATCH_COUNT = 6;
   const int LAT_POS = 1;
   const int LON_POS = 5;

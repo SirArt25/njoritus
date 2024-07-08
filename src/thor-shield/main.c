@@ -12,12 +12,12 @@ int main(int argc, char *argv[]) {
            argv[0]);
     return EXIT_FAILURE;
   }
-  apr_pool_t *p_parent_pool = NULL;
   if (apr_initialize() != APR_SUCCESS) {
     fprintf(stderr, "Failed to initialize APR\n");
     return EXIT_FAILURE;
   }
-  if (apr_pool_create(&p_parent_pool, NULL) != APR_SUCCESS) {
+  apr_pool_t *p_parent_pool;
+  if (initializePool(&p_parent_pool, NULL) != APR_SUCCESS) {
     fprintf(stderr, "Failed to create memory pool\n");
     return cleanupAndTerminate(IMMEDIATE_TERMINATE, NULL, EXIT_FAILURE);
   }

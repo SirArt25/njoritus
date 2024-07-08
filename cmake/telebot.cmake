@@ -17,5 +17,12 @@ include_directories(${TELEBOT_INCLUDE_DIR})
 list(APPEND INCLUDES_LIST ${TELEBOT_INCLUDE_DIR})
 
 # Create dependecy of njoritus from telebot
-add_dependencies(njoritus telebot)
-target_link_libraries(njoritus ${TELEBOT_LIB_DIR}/libtelebot.so)
+add_custom_target(
+  copy-telebot-libs
+  COMMAND ${CMAKE_COMMAND} -E copy ${TELEBOT_LIB_DIR}/libtelebot.so
+          ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}
+  COMMAND ${CMAKE_COMMAND} -E copy ${TELEBOT_LIB_DIR}/libtelebot.so.4.7.0
+          ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
+add_dependencies(copy-telebot-libs telebot)
+add_dependencies(njoritus copy-telebot-libs)
+target_link_libraries(njoritus ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/libtelebot.so)

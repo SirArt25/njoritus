@@ -97,3 +97,6 @@ odin-gaze/target/
 Cargo.lock
 **/*.rs.bk
 *.pdb
+
+
+.clang-format

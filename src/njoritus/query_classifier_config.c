@@ -1,5 +1,6 @@
 #include <njoritus/query_classifier_config.h>
 #include <stddef.h>
+#include <utilities.h>
 
 /**
  * @brief
@@ -10,7 +11,10 @@
  */
 apr_status_t initQueryClassifierConfig(QueryClassifierConfig *this,
                                        apr_pool_t *p_main_pool) {
-  apr_status_t status = apr_pool_create(&this->m_p_pool, p_main_pool);
+  if (this == NULL) {
+    return -1;
+  }
+  apr_status_t status = initializePool(&this->m_p_pool, p_main_pool);
 
   if (status != APR_SUCCESS) {
     return status;

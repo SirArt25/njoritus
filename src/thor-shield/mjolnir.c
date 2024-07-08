@@ -22,8 +22,8 @@ int secureExport(apr_pool_t *p_parent_pool, char *p_data, const char *p_path) {
     return EXIT_FAILURE;
   }
 
-  apr_pool_t *p_child_pool = NULL;
-  apr_status_t status = apr_pool_create(&p_child_pool, p_parent_pool);
+  apr_pool_t *p_child_pool;
+  apr_status_t status = initializePool(&p_child_pool, p_parent_pool);
 
   if (status != APR_SUCCESS) {
     apr_pool_destroy(p_child_pool);

@@ -48,7 +48,10 @@ RUN DEBIAN_FRONTEND=noninteractive \
     libjson-c-dev \
     git \
     pkg-config \
+    gnupg2 \
+    pass \
   && rm -rf /var/lib/apt/lists/*
+
 
 # Add tools for managing tokens
 RUN DEBIAN_FRONTEND=noninteractive \
