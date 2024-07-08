@@ -89,3 +89,11 @@ Makefile
 
 # external_projects
 external_projects/*/
+
+odin-gaze/debug/
+odin-gaze/target/
+
+# for rust
+Cargo.lock
+**/*.rs.bk
+*.pdb

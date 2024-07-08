@@ -1,4 +1,5 @@
 FROM --platform=linux/amd64  ubuntu:24.04
+FROM rust:latest
 SHELL ["/bin/bash", "-c"]
 RUN echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf.d/00-docker
 RUN echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf.d/00-docker
