@@ -3,6 +3,6 @@
 
 #include <mjolnir.h>
 
-gchar *loadSecret(const char *cp_sevice_name);
+char *loadSecret(const char *cp_sevice_name, apr_pool_t *p_parent_pool);
 
 #endif // THOR_SHIELD_DEC_H

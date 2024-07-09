@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <thor-shield/dec.h>
+#include <unistd.h>
 #include <utilities.h>
 
 extern volatile sig_atomic_t atomic_running;
@@ -20,14 +21,20 @@ int setupNjoritusBot(NjoritusBot *this) {
     return EXIT_FAILURE;
   }
 
-  gchar *p_token = loadSecret("mjorn");
-  if (p_token == NULL) {
+  apr_pool_t *p_pool = NULL;
+  if (initializePool(&p_pool, NULL) != APR_SUCCESS) {
     return EXIT_FAILURE;
   }
 
+  char *p_token = loadSecret("mjorn", p_pool);
+  if (p_token == NULL) {
+    apr_pool_destroy(p_pool);
+    return EXIT_FAILURE;
+  }
   if (telebot_create(&this->m_handler, p_token) != TELEBOT_ERROR_NONE) {
     printf("Telebot create failed\n");
     purgePointer(p_token, strlen(p_token));
+    apr_pool_destroy(p_pool);
     return EXIT_FAILURE;
   }
 
@@ -35,6 +42,7 @@ int setupNjoritusBot(NjoritusBot *this) {
     printf("Failed to get this information\n");
     purgePointer(p_token, strlen(p_token));
     destroyNjoritusBot(this);
+    apr_pool_destroy(p_pool);
     return EXIT_FAILURE;
   }
 
@@ -44,7 +52,7 @@ int setupNjoritusBot(NjoritusBot *this) {
 
   telebot_put_me(&this->m_user);
   purgePointer(p_token, strlen(p_token));
-
+  apr_pool_destroy(p_pool);
   return EXIT_SUCCESS;
 }
 
@@ -111,8 +119,11 @@ int runNjoritusBot(NjoritusBot *this, apr_pool_t *p_parent_pool) {
         memset(str, 0, STRING_SIZE);
         const char *cp_key =
             getResponseKeyFromQuery(&response_manager, message.text);
-        ResponseFunction response_function =
-            getResponseFunctionFromKey(&response_manager, cp_key);
+        ResponseFunction response_function = NULL;
+        if (cp_key != NULL) {
+          response_function =
+              getResponseFunctionFromKey(&response_manager, cp_key);
+        }
         if (response_function == NULL) {
           snprintf(str, ARRAY_SIZE(str), "<i>%s</i>", message.text);
         } else {
