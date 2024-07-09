@@ -1,6 +1,8 @@
 #ifndef NJORITUS_CALLBACKS_H
 #define NJORITUS_CALLBACKS_H
 
+#include <apr.h>
+#include <apr_pools.h>
 #include <stdio.h>
 
 typedef void (*CallbackFunctionT)(int);
@@ -34,6 +36,27 @@ static int isCallbackData(GeneralCallbackT *p_general_callback) {
 
 static int isCallbackFunction(GeneralCallbackT *p_general_callback) {
   return p_general_callback->type == CALLBACK_TYPE_FUNCTION;
+}
+
+static GeneralCallbackT *createCallbackData(void *data,
+                                            apr_pool_t *p_parent_pool) {
+  if (p_parent_pool == NULL) {
+    return NULL;
+  }
+  GeneralCallbackT *result =
+      apr_pcalloc(p_parent_pool, sizeof(GeneralCallbackT));
+  setCallbackData(result, data);
+  return result;
+}
+static GeneralCallbackT *createCallbackFunction(CallbackFunctionT func,
+                                                apr_pool_t *p_parent_pool) {
+  if (p_parent_pool == NULL) {
+    return NULL;
+  }
+  GeneralCallbackT *result =
+      apr_pcalloc(p_parent_pool, sizeof(GeneralCallbackT));
+  setCallbackFunction(result, func);
+  return result;
 }
 
 #endif // NJORITUS_CALLBACKS_H

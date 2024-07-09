@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdlib.h>
 #include <utilities.h>
 
@@ -96,4 +97,63 @@ int readInput(char *input, int length, apr_file_t *in_file) {
   input[strcspn(input, "\n")] = '\0';
 
   return status;
+}
+
+/**
+ * @brief
+ *
+ * @param p_pool
+ * @param p_parent_pool
+ * @return int
+ */
+int initializePool(apr_pool_t **p_ppool, apr_pool_t *p_parent_pool) {
+  if (p_ppool == NULL) {
+    return -1;
+  }
+  *p_ppool = NULL;
+  int status = apr_pool_create(p_ppool, p_parent_pool);
+
+  if (status != APR_SUCCESS) {
+    fprintf(stderr, "Failed to create memory pool\n");
+  }
+
+  return status;
+}
+
+/**
+ *
+ */
+void removeSubstring(char *p_string, const char *cp_substring) {
+  char *match;
+  int len = (int)strlen(cp_substring);
+
+  // Search for the substring in the string
+  while ((match = strstr(p_string, cp_substring))) {
+    // Shift the remaining characters to the left
+    memmove(match, match + len, strlen(match + len) + 1);
+  }
+}
+
+/**
+ * @brief
+ *
+ * @param p_string
+ * @return char*
+ */
+char *trimWhitespace(char *p_string) {
+  while (isspace((unsigned char)*p_string)) {
+    p_string++;
+  }
+
+  if (*p_string == 0) {
+    return p_string;
+  }
+
+  char *p_end = p_string + strlen(p_string) - 1;
+  while (p_end > p_string && isspace((unsigned char)*p_end)) {
+    p_end--;
+  }
+
+  *(p_end + 1) = '\0';
+  return p_string;
 }

@@ -15,4 +15,10 @@ void terminateQueryClassifier(QueryClassifier *this);
 
 QueryType proccessQuery(QueryClassifier *this, const char *cp_text);
 
+int initializeQuerying(QueryClassifierConfig *p_config,
+                       QueryClassifier *p_classifier,
+                       apr_pool_t *p_parent_pool);
+int terminateQuerying(QueryClassifierConfig *p_config,
+                      QueryClassifier *p_classifier, int c_val);
+
 #endif // NJORITUS_QUERY_CLASSIFIER_H

@@ -40,7 +40,7 @@ char *readTokenFromFile(apr_pool_t *p_parent_pool, const char *cp_path) {
     return NULL;
   }
   apr_pool_t *p_child_pool;
-  apr_status_t status = apr_pool_create(&p_child_pool, p_parent_pool);
+  apr_status_t status = initializePool(&p_child_pool, p_parent_pool);
 
   if (status != APR_SUCCESS) {
     apr_pool_destroy(p_child_pool);
