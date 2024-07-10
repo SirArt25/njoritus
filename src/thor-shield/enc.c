@@ -1,30 +1,23 @@
 #include <apr_strings.h>
 #include <enc.h>
+#include <keyutils.h>
 #include <utilities.h>
 
 /**
  * @brief
  *
- * @param cp_label
  * @param cp_token
  * @param cp_service_name
  * @return int
  */
-int saveSecret(const char *cp_label, const char *cp_token,
-               const char *cp_service_name) {
-  GError *p_gerror = NULL;
-
-  gboolean result = secret_password_store_sync(
-      &MJOLNIR, SECRET_COLLECTION_DEFAULT, cp_label, cp_token, NULL, &p_gerror,
-      "service", cp_service_name, NULL);
-
-  if (p_gerror) {
-    fprintf(stderr, "Error storing secret: %s\n", p_gerror->message);
-    g_error_free(p_gerror);
-    return FALSE;
+int saveSecret(const char *cp_token, const char *cp_service_name) {
+  const char *cp_key_type = "user";
+  if (add_key(cp_key_type, cp_service_name, cp_token, strlen(cp_token),
+              KEY_SPEC_SESSION_KEYRING) == -1) {
+    fprintf(stderr, "Error storing secret\n");
+    return EXIT_FAILURE;
   }
-
-  return result;
+  return EXIT_SUCCESS;
 }
 
 /**

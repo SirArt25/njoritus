@@ -4,13 +4,12 @@
 #include <apr.h>
 #include <apr_file_io.h>
 #include <apr_portable.h>
-#include <libsecret/secret.h>
+#include <keyutils.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-extern const SecretSchema MJOLNIR;
-
 int secureExport(apr_pool_t *p_parent_pool, char *p_data, const char *p_path);
+int deleteKey(const char *cp_service_name);
 
 #endif // THOR_SHIELD_MJOLNIR_H

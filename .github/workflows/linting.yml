@@ -29,6 +29,12 @@ jobs:
         sudo apt install -y libapr1 libapr1-dev software-properties-common
       shell: bash
 
+    - name: Install dependencies of keyutils
+      run: |
+        sudo apt update -y
+        sudo apt install -y keyutils libkeyutils-dev
+      shell: bash
+
     - name: Install clang-tidy
       run: |
         curl -fsSL "https://apt.llvm.org/llvm-snapshot.gpg.key" | \
@@ -46,7 +52,6 @@ jobs:
         sudo apt update -y
         sudo apt install -y git pkg-config libjson-c-dev libcurl4-openssl-dev
       shell: bash
-
 
     - name: Cofnigure Cmake
       run: |

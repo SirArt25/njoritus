@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <thor-shield/dec.h>
+#include <unistd.h>
 #include <utilities.h>
 
 extern volatile sig_atomic_t atomic_running;
@@ -20,14 +21,20 @@ int setupNjoritusBot(NjoritusBot *this) {
     return EXIT_FAILURE;
   }
 
-  gchar *p_token = loadSecret("mjorn");
-  if (p_token == NULL) {
+  apr_pool_t *p_pool = NULL;
+  if (initializePool(&p_pool, NULL) != APR_SUCCESS) {
     return EXIT_FAILURE;
   }
 
+  char *p_token = loadSecret("mjorn", p_pool);
+  if (p_token == NULL) {
+    apr_pool_destroy(p_pool);
+    return EXIT_FAILURE;
+  }
   if (telebot_create(&this->m_handler, p_token) != TELEBOT_ERROR_NONE) {
     printf("Telebot create failed\n");
     purgePointer(p_token, strlen(p_token));
+    apr_pool_destroy(p_pool);
     return EXIT_FAILURE;
   }
 
@@ -35,6 +42,7 @@ int setupNjoritusBot(NjoritusBot *this) {
     printf("Failed to get this information\n");
     purgePointer(p_token, strlen(p_token));
     destroyNjoritusBot(this);
+    apr_pool_destroy(p_pool);
     return EXIT_FAILURE;
   }
 
@@ -44,7 +52,7 @@ int setupNjoritusBot(NjoritusBot *this) {
 
   telebot_put_me(&this->m_user);
   purgePointer(p_token, strlen(p_token));
-
+  apr_pool_destroy(p_pool);
   return EXIT_SUCCESS;
 }
 
@@ -57,6 +65,47 @@ void destroyNjoritusBot(NjoritusBot *this) {
   if (this != NULL) {
     telebot_destroy(this->m_handler);
   }
+}
+
+static int createResponseManager(ResponseManager *p_response_manager,
+                                 apr_pool_t *p_parent_pool) {
+  if (p_response_manager == NULL) {
+    return EXIT_FAILURE;
+  }
+
+  if (initializeResponseManager(p_response_manager, p_parent_pool) !=
+      APR_SUCCESS) {
+    return EXIT_FAILURE;
+  }
+
+  registerResponseFunction(p_response_manager, "/getweather",
+                           responseGetWeather);
+  registerResponseFunction(p_response_manager, "/start", responseStart);
+  registerResponseFunction(p_response_manager, "/help", responseHelp);
+
+  return EXIT_SUCCESS;
+}
+
+static int getResponseString(ResponseManager *p_response_manager,
+                             apr_pool_t *p_parent_pool, char *p_text,
+                             char **p_str, int string_size) {
+  if (p_response_manager == NULL || p_parent_pool == NULL || p_text == NULL ||
+      p_str == NULL) {
+    return EXIT_FAILURE;
+  }
+  const char *cp_key = getResponseKeyFromQuery(p_response_manager, p_text);
+  ResponseFunction response_function = NULL;
+  if (cp_key != NULL) {
+    response_function = getResponseFunctionFromKey(p_response_manager, cp_key);
+  }
+  if (response_function == NULL) {
+    snprintf(*p_str, string_size, "<i>%s</i>", p_text);
+    return EXIT_SUCCESS;
+  }
+  removeSubstring(p_text, cp_key);
+  p_text = trimWhitespace(p_text);
+  return response_function(p_text, p_parent_pool,
+                           createCallbackData((void *)*p_str, p_parent_pool));
 }
 
 /**
@@ -76,14 +125,9 @@ int runNjoritusBot(NjoritusBot *this, apr_pool_t *p_parent_pool) {
   }
 
   ResponseManager response_manager;
-  if (initializeResponseManager(&response_manager, p_pool) != APR_SUCCESS) {
-    return cleanupAndTerminate(NO_TERMINATE, p_pool, EXIT_SUCCESS);
+  if (createResponseManager(&response_manager, p_pool) != EXIT_SUCCESS) {
+    return EXIT_FAILURE;
   }
-
-  registerResponseFunction(&response_manager, "/getweather",
-                           responseGetWeather);
-  registerResponseFunction(&response_manager, "/start", responseStart);
-  registerResponseFunction(&response_manager, "/help", responseHelp);
 
   int index;
   int count;
@@ -105,33 +149,24 @@ int runNjoritusBot(NjoritusBot *this, apr_pool_t *p_parent_pool) {
     printf("Number of updates: %d\n", count);
     for (index = 0; index < count; index++) {
       message = updates[index].message;
-      if (message.text) {
-        const int STRING_SIZE = 4096;
-        char str[STRING_SIZE];
-        memset(str, 0, STRING_SIZE);
-        const char *cp_key =
-            getResponseKeyFromQuery(&response_manager, message.text);
-        ResponseFunction response_function =
-            getResponseFunctionFromKey(&response_manager, cp_key);
-        if (response_function == NULL) {
-          snprintf(str, ARRAY_SIZE(str), "<i>%s</i>", message.text);
-        } else {
-          removeSubstring(message.text, cp_key);
-          message.text = trimWhitespace(message.text);
-          if (response_function(
-                  message.text, p_parent_pool,
-                  createCallbackData((void *)&str, p_parent_pool)) ==
-              EXIT_FAILURE) {
-            destroyResponseManager(&response_manager);
-            return cleanupAndTerminate(NO_TERMINATE, p_pool, EXIT_FAILURE);
-          }
-        }
-        ret = telebot_send_message(this->m_handler, message.chat->id, str,
-                                   "HTML", false, false,
-                                   updates[index].message.message_id, "");
-        if (ret != TELEBOT_ERROR_NONE) {
-          printf("Failed to send message: %d \n", ret);
-        }
+      if (message.text == NULL) {
+        offset = updates[index].update_id + 1;
+        continue;
+      }
+      const int STRING_SIZE = 4096;
+      char str[STRING_SIZE];
+      memset(str, 0, STRING_SIZE);
+      char *p_str = str;
+      if (getResponseString(&response_manager, p_pool, message.text, &p_str,
+                            STRING_SIZE) != EXIT_SUCCESS) {
+        destroyResponseManager(&response_manager);
+        return cleanupAndTerminate(NO_TERMINATE, p_pool, EXIT_SUCCESS);
+      }
+      ret = telebot_send_message(this->m_handler, message.chat->id, p_str,
+                                 "HTML", false, false,
+                                 updates[index].message.message_id, "");
+      if (ret != TELEBOT_ERROR_NONE) {
+        printf("Failed to send message: %d \n", ret);
       }
       offset = updates[index].update_id + 1;
     }

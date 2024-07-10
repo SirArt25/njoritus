@@ -1,9 +1,18 @@
-# find PkgConfig and then LIBSECRET
+# find PkgConfig and then KEYUTILS
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(LIBSECRET REQUIRED libsecret-1)
+find_path(KEYUTILS_INCLUDE_DIR keyutils.h)
+find_library(KEYUTILS_LIBRARIES keyutils)
 
-include_directories(${LIBSECRET_INCLUDE_DIRS})
-add_definitions(${LIBSECRET_CFLAGS_OTHER})
+if(KEYUTILS_INCLUDE_DIR AND KEYUTILS_LIBRARIES)
+  set(KEYUTILS_FOUND TRUE)
+  message(STATUS "Found keyutils: ${KEYUTILS_LIBRARIES}")
+else()
+  set(KEYUTILS_FOUND FALSE)
+  message(FATAL_ERROR "Could not find keyutils")
+endif()
+
+include_directories(${KEYUTILS_INCLUDE_DIR})
+link_directories(${KEYUTILS_LIBRARIES})
 
 # define include and source files of thor-shield
 set(THOR_SHIELD_INCLUDE_LIST ${CMAKE_SOURCE_DIR}/include/thor-shield)
@@ -26,8 +35,8 @@ add_library(thor-shield-lib ${THOR_SHIELD_SOURCE_FILES})
 
 target_include_directories(thor-shield PRIVATE ${THOR_SHIELD_INCLUDE_LIST})
 target_include_directories(thor-shield-lib PRIVATE ${THOR_SHIELD_INCLUDE_LIST})
-target_link_libraries(thor-shield ${LIBSECRET_LIBRARIES})
-target_link_libraries(thor-shield-lib ${LIBSECRET_LIBRARIES})
+target_link_libraries(thor-shield ${KEYUTILS_LIBRARIES})
+target_link_libraries(thor-shield-lib ${KEYUTILS_LIBRARIES})
 
 target_include_directories(thor-shield PRIVATE ${APR_INCLUDE_DIR})
 target_include_directories(thor-shield-lib PRIVATE ${APR_INCLUDE_DIR})

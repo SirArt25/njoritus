@@ -56,5 +56,11 @@ RUN DEBIAN_FRONTEND=noninteractive \
 # Add tools for managing tokens
 RUN DEBIAN_FRONTEND=noninteractive \
   apt update \
-  && apt install -y libsecret-1-dev \
+  && apt install -y keyutils libkeyutils-dev \
 && rm -rf /var/lib/apt/lists/*
+
+
+COPY ${DOCKER_DIR}/scripts/entrypoint.sh /workspace/env_scripts/entrypoint.sh
+RUN chmod +x /workspace/env_scripts/entrypoint.sh
+
+RUN /workspace/env_scripts/entrypoint.sh
