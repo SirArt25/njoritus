@@ -59,6 +59,11 @@ RUN DEBIAN_FRONTEND=noninteractive \
   && apt install -y keyutils libkeyutils-dev \
 && rm -rf /var/lib/apt/lists/*
 
+# Add tools for test enviroment
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt update \
+  && apt install -y libcunit1 libcunit1-doc libcunit1-dev \
+&& rm -rf /var/lib/apt/lists/*
 
 COPY ${DOCKER_DIR}/scripts/entrypoint.sh /workspace/env_scripts/entrypoint.sh
 RUN chmod +x /workspace/env_scripts/entrypoint.sh

@@ -47,6 +47,13 @@ include(${CMAKE_CONFIG_DIR}/linting.cmake)
 # Include odin-gaze
 include(${CMAKE_CONFIG_DIR}/odin-gaze.cmake)
 
+# Include tests include(${CMAKE_CONFIG_DIR}/cunit.cmake)
+option(ENABLE_TESTS "Enable tests" OFF)
+
+if(ENABLE_TESTS)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
 # Add aditional clean files
 list(JOIN ADDITIONAL_CLEAN_FILES ";" ADDITIONAL_CLEAN_FILES_STRING)
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES

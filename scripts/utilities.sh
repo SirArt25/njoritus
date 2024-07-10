@@ -9,10 +9,15 @@ configure() {
   if [ ! -d "$BUILD_DIR" ]; then
     mkdir "$BUILD_DIR"
   fi
-
   cd "$BUILD_DIR"
 
-  cmake ..
+  local create_tests=$1
+
+  if [ "$create_tests" = true ]; then
+    cmake -DENABLE_TESTS=ON  ..
+  else
+    cmake -DENABLE_TESTS=OFF  ..
+  fi
 
   cd -
 }
@@ -22,14 +27,17 @@ pure_build() {
 
   CORES=$(nproc)
 
-  cmake --build . -- -j$CORES
+  cmake  --build . -- -j$CORES
 
   cd -
 }
 
 # Function to configure and build the project
 build() {
-  configure
+  local create_tests=$1
+  # Add build commands here
+
+  configure "$create_tests"
   pure_build
 }
 
@@ -66,13 +74,15 @@ pure_lint() {
 
 
 lint() {
-  configure
+  local create_tests=$1
+  configure "$create_tests"
   pure_lint
 }
 
 
 build_with_checks(){
-  configure
+  local create_tests=$1
+  configure "$create_tests"
   pure_lint
   pure_build
 }

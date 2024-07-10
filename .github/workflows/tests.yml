@@ -1,4 +1,4 @@
-name: Build
+name: Run Tests
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main, master, develop ]
 
 jobs:
-  build:
+  build_with_tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -61,7 +61,20 @@ jobs:
         sudo apt install -y git pkg-config libjson-c-dev libcurl4-openssl-dev
       shell: bash
 
-    - name: Build
+    - name: Install dependencies of CUnit
       run: |
-        bash scripts/build.sh build
+        sudo apt update -y
+        sudo apt install -y libcunit1 libcunit1-doc libcunit1-dev
+      shell: bash
+
+    - name: Build with tests
+      run: |
+        bash scripts/build.sh build_with_test
+      shell: bash
+
+    - name: Run tests
+      run: |
+        cd build/tests
+        ctest
+        cd -
       shell: bash
