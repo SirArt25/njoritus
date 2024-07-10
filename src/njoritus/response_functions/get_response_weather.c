@@ -97,6 +97,8 @@ int responseHelp(const char *cp_query, apr_pool_t *p_parent_pool,
   if (p_result == NULL) {
     return EXIT_FAILURE;
   }
+  printf("The value of p_result is: %p\n", p_result);
+  printf("The direction of p_result is: %p\n", &p_result);
   p_parent_pool = NULL;
   const int MESSAGE_SIZE = 450;
   strncpy(
@@ -112,5 +114,8 @@ int responseHelp(const char *cp_query, apr_pool_t *p_parent_pool,
 
       "If you have any questions or need further assistance, feel free to ask!",
       MESSAGE_SIZE);
+  printf("The value of p_result is: %p\n", p_result);
+  printf("The direction of p_result is: %p\n", &p_result);
+  printf("end of update function\n");
   return EXIT_SUCCESS;
 }

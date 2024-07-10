@@ -59,8 +59,8 @@ int deleteKey(const char *cp_service_name) {
   const char *cp_key_type = "user";
 
   // Search for the key by name in the user keyring
-  key_serial_t key =
-      keyctl_search(KEY_SPEC_SESSION_KEYRING, cp_key_type, cp_service_name, 0);
+  key_serial_t key = (key_serial_t)keyctl_search(
+      KEY_SPEC_SESSION_KEYRING, cp_key_type, cp_service_name, 0);
   if (key == -1) {
     fprintf(stderr, "Can not delete the key\n");
     return EXIT_FAILURE;

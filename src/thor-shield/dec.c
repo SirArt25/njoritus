@@ -12,8 +12,8 @@ char *loadSecret(const char *cp_sevice_name, apr_pool_t *p_parent_pool) {
   }
   const char *cp_key_type = "user";
 
-  key_serial_t key =
-      keyctl_search(KEY_SPEC_SESSION_KEYRING, cp_key_type, cp_sevice_name, 0);
+  key_serial_t key = (key_serial_t)keyctl_search(
+      KEY_SPEC_SESSION_KEYRING, cp_key_type, cp_sevice_name, 0);
   if (key == -1) {
     fprintf(stderr, "Error retrieving secret\n");
     return NULL;
