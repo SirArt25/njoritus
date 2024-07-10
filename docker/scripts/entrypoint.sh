@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -e
-
-keyctl new_session
-keyctl link @u @s
+keyctl new_session  > /dev/null
+keyctl link @u @s  > /dev/null
 
 
 exit 0
