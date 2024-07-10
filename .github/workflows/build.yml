@@ -39,6 +39,12 @@ jobs:
         sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-14 100
       shell: bash
 
+    - name: Install dependencies of keyutils
+      run: |
+        sudo apt update -y
+        sudo apt install -y keyutils libkeyutils-dev
+      shell: bash
+
     - name: Install dependencies of telebot
       run: |
         sudo apt update -y
