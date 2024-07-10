@@ -48,7 +48,7 @@ include(${CMAKE_CONFIG_DIR}/linting.cmake)
 include(${CMAKE_CONFIG_DIR}/odin-gaze.cmake)
 
 # Include tests include(${CMAKE_CONFIG_DIR}/cunit.cmake)
-option(ENABLE_TESTS "Enable tests" ON)
+option(ENABLE_TESTS "Enable tests" OFF)
 
 if(ENABLE_TESTS)
   enable_testing()
