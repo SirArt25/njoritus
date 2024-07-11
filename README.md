@@ -7,8 +7,8 @@ njoritus is a telegram bot for weather service.
 - [Build](#build)
 - [Docker](#docker)
 - [Usage](#usage)
-- [License](#license)
 - [Tests](#tests)
+- [License](#license)
 
 ## Prerequisites
 
@@ -112,3 +112,13 @@ After running thor-shield, you can run the njortius:
 ```bash
 .<path/to/njoritus/build/bin>/njoritus
 ```
+
+## Tests
+To run tests, you need ctest. Use the following commands to run the tests:
+```bash
+cd <path/to/project/build/tests/>
+ctest
+```
+
+## License
+This project is licensed under the GPLv3 License - see the LICENSE file for details.
