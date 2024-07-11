@@ -116,7 +116,7 @@ After running thor-shield, you can run the njortius:
 ## Tests
 To run tests, you need ctest. Use the following commands to run the tests:
 ```bash
-cd <path/to/njoritus/build/tests>
+cd <path/to/njoritus/build>/tests
 ctest
 ```
 
