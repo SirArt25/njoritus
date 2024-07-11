@@ -1,0 +1,64 @@
+name: Linting
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Add git safe directory
+      run: git config --global --add safe.directory $(realpath .)
+
+    - name: Install CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: '3.22.1'
+
+    - name: Install APR
+      run: |
+        sudo apt update -y
+        sudo apt install -y libapr1 libapr1-dev software-properties-common
+      shell: bash
+
+    - name: Install dependencies of keyutils
+      run: |
+        sudo apt update -y
+        sudo apt install -y keyutils libkeyutils-dev
+      shell: bash
+
+    - name: Install clang-tidy
+      run: |
+        curl -fsSL "https://apt.llvm.org/llvm-snapshot.gpg.key" | \
+            sudo gpg --dearmor | \
+            sudo tee /usr/share/keyrings/llvm-snapshot-keyring.gpg > /dev/null
+        echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot-keyring.gpg] http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" | \
+            sudo tee /etc/apt/sources.list.d/llvm.list
+        sudo apt update
+        sudo apt install -y clang-tidy-14
+        sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-14 100
+      shell: bash
+
+    - name: Install dependencies of telebot
+      run: |
+        sudo apt update -y
+        sudo apt install -y git pkg-config libjson-c-dev libcurl4-openssl-dev
+      shell: bash
+
+    - name: Cofnigure Cmake
+      run: |
+        bash scripts/build.sh configure
+      shell: bash
+
+    - name: Run clang-tidy
+      run: |
+        bash scripts/checks.sh lint
+      shell: bash
