@@ -5,6 +5,7 @@ njoritus is a telegram bot for weather service.
 
 - [Prerequisites](#prerequisites)
 - [Build](#build)
+- [Docker](#docker)
 - [Usage](#usage)
 - [License](#license)
 
@@ -72,7 +73,7 @@ Instead of using CMake directly, you can utilize the provided script to build or
   bash scripts/build.sh build_with_checks_and_tests
   ```
 
-#### Cleaning the njoritus
+### Cleaning the njoritus
 
 - To clean the njoritus and remove all generated files:
     ```bash
@@ -83,3 +84,19 @@ Instead of using CMake directly, you can utilize the provided script to build or
     ```bash
     bash scripts/clean.sh clean-all
     ```
+
+## Docker
+
+### Building the Docker Image
+
+Build the Docker image:
+```bash
+docker build --build-arg DOCKER_DIR_ARG=<relative/path/to/project/docker> -t <image-name> -f <relative/path/to/project/docker/njoritus.Dockerfile> .
+```
+
+### Running the Docker Container
+
+Run the Docker container:
+```bash
+docker run -it -d --cap-add=SYS_ADMIN --privileged <image-name>
+```
