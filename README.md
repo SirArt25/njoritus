@@ -8,6 +8,7 @@ njoritus is a telegram bot for weather service.
 - [Docker](#docker)
 - [Usage](#usage)
 - [License](#license)
+- [Tests](#tests)
 
 ## Prerequisites
 
@@ -99,4 +100,15 @@ docker build --build-arg DOCKER_DIR_ARG=<relative/path/to/project/docker> -t <im
 Run the Docker container:
 ```bash
 docker run -it -d --cap-add=SYS_ADMIN --privileged <image-name>
+```
+
+## Usage
+
+After building the njoritus, you can run the executables located in `/build/bin/`. To run the njortius, you first need to obtain a token from Telegram. For security purposes, the njoritus utilizes keyutils. You must store the Telegram token in keyutils under the name "mjorn". This can be accomplished with the following command:
+```bash
+.<path/to/njoritus/build/bin>/thor-shield --enc <token-folder> mjorn
+```
+After running thor-shield, you can run the njortius:
+```bash
+.<path/to/njoritus/build/bin>/njoritus
 ```
