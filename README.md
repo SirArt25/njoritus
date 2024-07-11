@@ -92,7 +92,7 @@ Instead of using CMake directly, you can utilize the provided script to build or
 
 Build the Docker image:
 ```bash
-docker build --build-arg DOCKER_DIR_ARG=<relative/path/to/project/docker> -t <image-name> -f <relative/path/to/project/docker/njoritus.Dockerfile> .
+docker build --build-arg DOCKER_DIR_ARG=<relative/path/to/njoritus>/docker -t <image-name> -f <path/to/njoritus/docker>/njoritus.Dockerfile .
 ```
 
 ### Running the Docker Container
@@ -116,7 +116,7 @@ After running thor-shield, you can run the njortius:
 ## Tests
 To run tests, you need ctest. Use the following commands to run the tests:
 ```bash
-cd <path/to/project/build/tests/>
+cd <path/to/njoritus/build/tests>
 ctest
 ```
 
